@@ -22,8 +22,7 @@
 <li>React İcons</li>  
 <li>React Slick</li>  
 <li>React Toastify</li>  
-<li>uuid</li>  
-<li></li>    
+<li>uuid</li>   
 </ul></strong>
 
 
@@ -42,15 +41,20 @@
 
 
 
+## What is Firebase
+
+**<p>Firebase is a cloud-based development platform developed by Google. In short, Firebase provides the backend infrastructure necessary to develop mobile and web applications.</p>**
 
 
+ <h5>Authentication:</h5> 
+Helps users log in to your application. It offers the opportunity to log in with social media accounts such as Google, Facebook, Twitter.
 
 
+ <h5>Realtime Database:</h5> 
+It is a database used to store and update your application's data in real time.
 
-
-
-
-
+<h5>Storage: </h5> 
+It is a storage area used to store your application's files.
 
 
 
