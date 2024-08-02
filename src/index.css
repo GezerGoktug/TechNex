@@ -1,0 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+@tailwind base;
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+  }
+  fieldset {
+    display: block;
+  }
+}
+@tailwind components;
+
+@layer components {
+  .btn-gradient {
+    @apply transition-all  duration-300 ease-in z-10 relative text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-cyan-500 border border-emerald-400;
+    @apply hover:bg-clip-border hover:border-transparent hover:text-gray-200;
+    @apply after:from-green-600 after:to-cyan-500 after:bg-gradient-to-r after:transition-all after:duration-300 after:ease-in after:absolute after:h-0 after:w-0 after:content-[""] after:-z-10 after:left-0 after:bottom-0 after:opacity-0;
+    @apply hover:after:opacity-100 hover:after:right-auto hover:after:top-auto hover:after:h-full hover:after:w-full;
+  }
+  .btn-gradient:hover {
+    background: transparent;
+  }
+  .btn-return-top {
+    @apply hover:bg-emerald-950 transition-colors bg-emerald-900 text-white  !px-5 !py-4;
+  }
+  .bg-skew {
+    @apply relative before:block before:absolute before:-inset-1 before:-skew-y-2 before:-z-10;
+  }
+  .cookies-button {
+    @apply !text-sm w-full min-[460px]:w-auto min-[800px]:!text-base hover:border-slate-900 border-slate-500 border-2;
+  }
+  .social-media-links {
+    @apply cursor-pointer opacity-75 hover:opacity-100 transition-all hover:text-white hover:bg-slate-800 border-2 p-2  border-slate-800  rounded-lg;
+  }
+  .brand-item {
+    @apply text-7xl mx-auto hover:opacity-100  cursor-pointer transition-opacity  opacity-60;
+  }
+  .nav-link {
+    @apply relative transition-colors hover:text-emerald-500;
+    @apply hover:after:w-full hover:after:left-0;
+    @apply after:content-[""] after:absolute after:w-0 after:h-[2px] after:left-1/2 after:transition-all after:duration-300 after:ease-in after:-bottom-[2px] after:bg-gradient-to-r after:from-green-600 after:to-cyan-500;
+  }
+  .nav-link.active {
+    @apply after:w-full after:left-0 text-emerald-500;
+  }
+  .custom-container {
+    @apply w-[95%] xs:w-[90%] sm:w-[600px] md:w-[700px] lg:w-[900px] xl:w-[1200px] mx-auto;
+  }
+}
+
+@tailwind utilities;
+
+@layer utilities {
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
+  .flex-around {
+    @apply flex justify-around items-center;
+  }
+  .text-gradient-b {
+    @apply bg-gradient-to-b text-transparent bg-clip-text;
+  }
+  .text-gradient-r {
+    @apply bg-gradient-to-r text-transparent bg-clip-text;
+  }
+  .col-center {
+    @apply flex flex-col items-center;
+  }
+  .col-start {
+    @apply flex flex-col items-start;
+  }
+}
+body {
+  @apply bg-slate-100;
+}
+.carousel-item {
+  background: rgb(0, 0, 0);
+  @apply bg-center bg-no-repeat bg-cover;
+}
+
+@media (max-height: 568px) {
+  header .carousel h2 {
+    margin-top: 45%;
+  }
+}
+#nav::after {
+  @apply absolute -bottom-[2px] left-1/2 bg-white rounded-[1px] shadow-[0_0_4px_2px_#ffffff80] content-[''] h-[2px] w-0 animate-navAnimate;
+}
+
+#home-section-1 {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.7344187675070029) 0%,
+      rgba(0, 0, 0, 0.753) 100%
+    ),
+    url(../public/img/sections/section.jpg);
+  @apply bg-center bg-no-repeat bg-cover;
+}
+.slick-slider .slick-arrow {
+  z-index: 5;
+}
+.slick-slider .slick-arrow::before {
+  color: black;
+  font-size: 25px !important;
+}
+@media (max-width: 400px) {
+  .slick-slider .slick-prev::before {
+    margin-left: 16px;
+  }
+  .slick-slider .slick-next::before {
+    margin-left: -36px;
+  }
+}
+#filtre-tags::-webkit-scrollbar {
+  height: 5px;
+}
+#filtre-tags::-webkit-scrollbar-thumb {
+  @apply bg-slate-400 rounded-full;
+}
