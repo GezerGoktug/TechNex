@@ -1,13 +1,13 @@
-import DetailPicture from "../components/layout/ProductDetail/DetailPicture";
-import DetailContent from "../components/layout/ProductDetail/DetailContent";
+import DetailPicture from "../components/ProductDetail/DetailPicture";
+import DetailContent from "../components/ProductDetail/DetailContent";
 import { Link, useParams } from "react-router-dom";
 import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
 import Button from "../components/UI/Button";
 import { MdOutlineFeaturedPlayList } from "react-icons/md";
 import { FaCommentAlt } from "react-icons/fa";
-import Reviews from "../components/layout/ProductDetail/Reviews";
-import Features from "../components/layout/ProductDetail/Features";
+import Reviews from "../components/ProductDetail/Reviews";
+import Features from "../components/ProductDetail/Features";
 import { useState } from "react";
 import Skeletons from "../components/UI/Skeletons";
 import useReviews from "../hooks/useReviews";

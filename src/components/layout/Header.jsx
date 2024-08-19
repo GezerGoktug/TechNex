@@ -1,18 +1,11 @@
-import { useLocation } from "react-router-dom";
-import Hero from "./Hero";
+import Hero from "../Home/Hero/Hero";
 import Navbar from "./Navbar/Navbar";
 
-const Header = ({ setSideBar }) => {
-  const { pathname } = useLocation();
-
+const Header = () => {
   return (
-    <header
-      className={` ${
-        pathname === "/" && "min-h-screen"
-      } relative    text-white  `}
-    >
-      <Navbar setSideBar={setSideBar} />
-      {pathname === "/" && <Hero />}
+    <header className=" relative text-white">
+      <Navbar />
+      <Hero />
     </header>
   );
 };

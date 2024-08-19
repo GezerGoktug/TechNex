@@ -1,7 +1,9 @@
 import { FaBars } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Logo from "../../UI/Logo";
+import { useState } from "react";
+import SideBar from "../SideBar";
 
 const data = [
   {
@@ -22,8 +24,13 @@ const data = [
   },
 ];
 
-const NavLeft = ({ setSideBar }) => {
+const NavLeft = () => {
+  const [sideBar, setSideBar] = useState(false);
   return (
+    <>
+    <AnimatePresence>
+      {sideBar && <SideBar setSideBar={setSideBar}/>}
+    </AnimatePresence>
     <motion.div
       initial={{ y: -90 }}
       animate={{ y: 0 }}
@@ -50,6 +57,7 @@ const NavLeft = ({ setSideBar }) => {
         ))}
       </ul>
     </motion.div>
+    </>
   );
 };
 

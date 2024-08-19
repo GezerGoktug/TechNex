@@ -41,7 +41,7 @@
     @apply cursor-pointer opacity-75 hover:opacity-100 transition-all hover:text-white hover:bg-slate-800 border-2 p-2  border-slate-800  rounded-lg;
   }
   .brand-item {
-    @apply text-7xl mx-auto hover:opacity-100  cursor-pointer transition-opacity  opacity-60;
+    @apply text-7xl   hover:opacity-100  cursor-pointer transition-opacity  opacity-60;
   }
   .nav-link {
     @apply relative transition-colors hover:text-emerald-500;

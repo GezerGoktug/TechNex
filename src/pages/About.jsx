@@ -1,8 +1,8 @@
-import SectionArticle from "../components/UI/SectionArticle";
-import Countries from "../components/layout/About/Countries";
-import Testimonials from "../components/layout/About/Testimonials";
+import SectionArticle from "../components/About/SectionArticle";
+import Countries from "../components/About/Countries";
+import Testimonials from "../components/About/Testimonials";
 import { aboutPageArticleContent } from "../constants/content";
-import ContactForBrandWithUs from "../components/layout/About/ContactForBrandWithUs";
+import ContactForBrandWithUs from "../components/About/ContactForBrandWithUs";
 
 const About = () => {
   return (

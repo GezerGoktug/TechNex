@@ -6,6 +6,10 @@ export default {
   theme: {
     extend: {
       keyframes: {
+        slide: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
         navAnimate: {
           "0%": {
             width: "0%",
@@ -29,7 +33,8 @@ export default {
       },
       animation: {
         navAnimate: "navAnimate 0.8s ease-in forwards",
-        navAnimate2: "navAnimate2 0.5s ease-in"
+        navAnimate2: "navAnimate2 0.5s ease-in",
+        slide:"slide 20s linear infinite"
       },
       screens: {
         xs: "400px",

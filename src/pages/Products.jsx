@@ -1,18 +1,19 @@
 import Button from "../components/UI/Button";
 import { useEffect, useState } from "react";
 import { MdFilterList } from "react-icons/md";
-import ProductSlider from "../components/layout/Products/ProductSlider";
-import Filter from "../components/layout/Products/Filter";
-import FiltreTags from "../components/layout/Products/FiltreTags";
-import ProductsSection from "../components/layout/Products/ProductsSection";
-import Categories from "../components/layout/Products/Categories";
+import ProductSlider from "../components/Products/ProductSlider";
+import Filter from "../components/Products/Filter";
+import FiltreTags from "../components/Products/FiltreTags";
+import ProductsSection from "../components/Products/ProductsSection";
+import Categories from "../components/Products/Categories";
 import Pagination from "../components/UI/Pagination";
 import { motion } from "framer-motion";
 import { fadeInLeft } from "../animations/variants";
 import { filtreActions } from "../redux/slices/filtreSlice";
 import { useDispatch } from "react-redux";
 import { modalActions } from "../redux/slices/modalSlice";
-import Modal from "../components/UI/Modals/Modal";
+import Modal from "../components/UI/Modal";
+
 
 const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);

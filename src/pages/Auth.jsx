@@ -1,6 +1,6 @@
 import { useState } from "react";
-import LoginPanel from "../components/layout/authPage/LoginPanel";
-import RegisterPanel from "../components/layout/authPage/RegisterPanel";
+import LoginPanel from "../components/authPage/LoginPanel";
+import RegisterPanel from "../components/authPage/RegisterPanel";
 
 const Auth = () => {
   const [chancePanel, setChancePanel] = useState(true);

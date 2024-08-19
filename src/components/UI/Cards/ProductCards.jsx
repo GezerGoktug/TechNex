@@ -98,6 +98,7 @@ const ProductCards = ({ type, product }) => {
               <div className="h-40 w-full rounded-xl animate-pulse bg-slate-200 mx-auto" />
             ) : (
               <img
+                loading="lazy"
                 className="h-40  mx-auto object-contain hover:scale-105 ease duration-150 cursor-pointer"
                 src={imgUrl}
                 alt={product.title}

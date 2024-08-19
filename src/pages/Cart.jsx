@@ -1,7 +1,7 @@
 import { fadeInLeft, fadeInRights } from "../animations/variants";
-import CartTable from "../components/layout/Cart/CartTable";
-import Cash from "../components/layout/Cart/Cash";
-import PayCreditCard from "../components/layout/Cart/PayCreditCard";
+import CartTable from "../components/Cart/CartTable";
+import Cash from "../components/Cart/Cash";
+import PayCreditCard from "../components/Cart/PayCreditCard";
 import { motion } from "framer-motion";
 
 const Cart = () => {

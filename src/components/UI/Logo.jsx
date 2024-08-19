@@ -1,11 +1,11 @@
 import { IoIosPhonePortrait } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 
 const Logo = () => {
-  const navigate = useNavigate();
   return (
+    <Link to="../">
     <div
-      onClick={() => navigate("")}
       className="flex items-center cursor-pointer gap-2   text-2xl lg:text-3xl"
     >
       <IoIosPhonePortrait />
@@ -16,6 +16,7 @@ const Logo = () => {
         </span>
       </h1>
     </div>
+    </Link>
   );
 };
 

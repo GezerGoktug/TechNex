@@ -5,21 +5,19 @@ import {
   useScroll,
 } from "framer-motion";
 import { Fragment, useEffect, useState } from "react";
-import SideBar from "../../components/layout/SideBar";
 import Header from "../../components/layout/Header";
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../../components/layout/Footer/Footer";
 import Button from "../../components/UI/Button";
 import { FaArrowUp } from "react-icons/fa6";
 import { scrollToTop } from "../../helpers/scrollToTop";
-import Cookies from "../../components/UI/Cookies";
+import Cookies from "../../components/layout/Cookies";
 
 const MainLayout = () => {
   const [cookies, setCookies] = useState(
     JSON.parse(localStorage.getItem("cookiesPrefer")) ?? true
   );
   const [showButton, setShowButton] = useState(false);
-  const [sideBar, setSideBar] = useState(false);
   const { scrollY } = useScroll();
 
   //! Çerez tercihinden sonra modalı bi daha gösterme ve localde tercihi sakla
@@ -39,10 +37,7 @@ const MainLayout = () => {
   }, [pathname]);
   return (
     <Fragment>
-      <AnimatePresence>
-        {sideBar && <SideBar setSideBar={setSideBar} />}
-      </AnimatePresence>
-      <Header setSideBar={setSideBar} />
+      <Header />
       <main className="overflow-x-hidden">
         <Outlet />
       </main>

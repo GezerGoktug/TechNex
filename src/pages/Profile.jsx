@@ -1,8 +1,8 @@
 
 import { useState } from "react";
-import ProfilePanel from "../components/layout/Profile/ProfilePanel";
-import Orders from "../components/layout/Profile/Orders";
-import Settings from "../components/layout/Profile/Settings";
+import ProfilePanel from "../components/Profile/ProfilePanel";
+import Orders from "../components/Profile/Orders";
+import Settings from "../components/Profile/Settings";
 
 
 const Profile = () => {
