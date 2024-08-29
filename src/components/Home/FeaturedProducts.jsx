@@ -3,7 +3,7 @@ import useFeaturedProducts from "../../hooks/useFeaturedProducts";
 import { FEATURES_PRODUCT_CARD } from "../../constants/types";
 import ProductCards from "../UI/Cards/ProductCards";
 
-const FeaturesProducts = () => {
+const FeaturedProducts = () => {
   const settings = {
     dots: true,
     infinite: true,
@@ -59,4 +59,4 @@ const FeaturesProducts = () => {
   );
 };
 
-export default FeaturesProducts;
+export default FeaturedProducts;
