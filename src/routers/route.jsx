@@ -10,8 +10,8 @@ import Favourites from "../pages/Favourites";
 import Auth from "../pages/Auth";
 import Profile from "../pages/Profile";
 import PrivateRoute from "./PrivateRoute";
-import AuthLayout from "../pages/layouts/AuthLayout";
-import MainLayout from "../pages/layouts/MainLayout";
+import AuthLayout from "../layouts/AuthLayout";
+import MainLayout from "../layouts/MainLayout";
 
 export const routes = createBrowserRouter([
   {

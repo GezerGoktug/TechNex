@@ -5,13 +5,13 @@ import {
   useScroll,
 } from "framer-motion";
 import { Fragment, useEffect, useState } from "react";
-import Header from "../../components/layout/Header";
+import Header from "../components/layout/Header";
 import { Outlet, useLocation } from "react-router-dom";
-import Footer from "../../components/layout/Footer/Footer";
-import Button from "../../components/UI/Button";
+import Footer from "../components/layout/Footer/Footer";
+import Button from "../components/UI/Button";
 import { FaArrowUp } from "react-icons/fa6";
-import { scrollToTop } from "../../helpers/scrollToTop";
-import Cookies from "../../components/layout/Cookies";
+import { scrollToTop } from "../helpers/scrollToTop";
+import Cookies from "../components/layout/Cookies";
 
 const MainLayout = () => {
   const [cookies, setCookies] = useState(
