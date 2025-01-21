@@ -2,42 +2,42 @@ import { Table } from "flowbite-react";
 import Button from "../UI/Button";
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa6";
 import useFirebaseImageUrl from "../../hooks/useFirebaseImageUrl";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { cartActions } from "../../redux/slices/cartSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { decreaseQuantity, increaseQuantity, removeCart } from "../../database/firestoreFunc";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeCart,
+} from "../../database/firestoreFunc";
 
 const CartTableItem = ({ isOrderItem, item }) => {
-  
   const imgUrl = useFirebaseImageUrl(item?.images.img1);
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.authSlice);
   const dispatch = useDispatch();
 
   //! Birinci miktar artırma işlemi bitmeden tekrar basılması durumunu engellemek için
-  //!  Çünkü ardı ardına cok hızlı basılması durumunda veritabanı bu duruma yetişemez 
+  //!  Çünkü ardı ardına cok hızlı basılması durumunda veritabanı bu duruma yetişemez
   const [doQuantityOperations, setDoQuantityOperations] = useState(true);
   //! Ürün miktarını artırma işlemi
   const increaseHandle = async () => {
-    if(!doQuantityOperations) return;
-    await increaseQuantity(item,user.uid,setDoQuantityOperations)
+    if (!doQuantityOperations) return;
+    await increaseQuantity(item, setDoQuantityOperations);
     dispatch(cartActions.increaseQuantity({ product: item }));
   };
   //! Ürün miktarını azaltma işlemi
   const decreaseHandle = async () => {
-    if(!doQuantityOperations) return;
+    if (!doQuantityOperations) return;
     //! Eğer miktar 1 ise ürünü sepetten çıkar
-    if(item.quantity === 1)
-      await removeCart(item,user.uid)
-    else
-     await decreaseQuantity(item,user.uid,setDoQuantityOperations)
+    if (item.quantity === 1) await removeCart(item);
+    else await decreaseQuantity(item, setDoQuantityOperations);
 
     dispatch(cartActions.decreaseQuantity({ product: item }));
   };
   //! Ürünü sepetten kaldırma işlemi
   const removeItemHandle = async () => {
-    await removeCart(item,user.uid) 
+    await removeCart(item);
     dispatch(cartActions.removeCart({ product: item }));
   };
   return (

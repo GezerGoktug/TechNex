@@ -1,10 +1,14 @@
 import { Badge, Card, Rating } from "flowbite-react";
-import { ERROR, FEATURES_PRODUCT_CARD, SMALL_PRODUCT_CARD } from "../../../constants/types";
+import {
+  ERROR,
+  FEATURES_PRODUCT_CARD,
+  SMALL_PRODUCT_CARD,
+} from "../../../constants/types";
 import { motion } from "framer-motion";
 import { FaCartPlus, FaHeart } from "react-icons/fa";
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
-import {  FaXmark } from "react-icons/fa6";
+import { FaXmark } from "react-icons/fa6";
 import useFirebaseImageUrl from "../../../hooks/useFirebaseImageUrl";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../../redux/slices/cartSlice";
@@ -23,7 +27,7 @@ const ProductCards = ({ type, product }) => {
   const [isAddedCart, setIsAddedCart] = useState(false);
   const [isFavProduct, setIsFavProduct] = useState(false);
   const { cart } = useSelector((state) => state.cartSlice);
-  const { isLoggedIn, user } = useSelector((state) => state.authSlice);
+  const { isLoggedIn } = useSelector((state) => state.authSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const imgUrl = useFirebaseImageUrl(product?.images.img1);
@@ -34,16 +38,11 @@ const ProductCards = ({ type, product }) => {
   }, [product, cart]);
   //! Ürünün favori ürün olduğunu kontrol için
   useEffect(() => {
-    if (user?.uid) {
-      const isFavProductLearnHandle = async () => {
-        const isFavProductInfo = await isFavProductLearn(
-          product?.id,
-          user?.uid
-        );
-        setIsFavProduct(isFavProductInfo);
-      };
-      isFavProductLearnHandle();
-    }
+    const isFavProductLearnHandle = async () => {
+      const isFavProductInfo = await isFavProductLearn(product?.id);
+      setIsFavProduct(isFavProductInfo);
+    };
+    isFavProductLearnHandle();
   }, []);
   //! Ürünü sepete ekleme işlemi
   const handleAddCart = async () => {
@@ -52,7 +51,7 @@ const ProductCards = ({ type, product }) => {
       return;
     }
 
-    await addCart(product, user.uid);
+    await addCart(product);
     dispatch(cartActions.addCart({ product }));
   };
   //! Ürünü favorilere ekleme/kaldırma işlemi
@@ -66,10 +65,10 @@ const ProductCards = ({ type, product }) => {
     }
     //! Ürün favori ise kaldır değilse ekle
     if (isFavProduct) {
-      await removeFavProduct(product.id, user.uid);
+      await removeFavProduct(product.id);
       setIsFavProduct(false);
     } else {
-      await addFavProduct(product, user.uid);
+      await addFavProduct(product);
       setIsFavProduct(true);
     }
   };

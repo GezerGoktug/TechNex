@@ -6,14 +6,12 @@ import Button from "../UI/Button";
 import { FaTrash } from "react-icons/fa6";
 import CartTableItem from "./CartTableItem";
 
-
 const CartTable = () => {
   const { cart } = useSelector((state) => state.cartSlice);
-  const { user } = useSelector((state) => state.authSlice);
   const dispatch = useDispatch();
   //! Sepet temizleme fonksiyonu
   const clearCartHandle = async () => {
-    await clearCart(user.uid);
+    await clearCart();
     dispatch(cartActions.clearCart());
   };
   return (

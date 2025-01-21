@@ -4,21 +4,24 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BsFillCartCheckFill } from "react-icons/bs";
-import { addCart, addFavProduct, isFavProductLearn, removeFavProduct } from "../../database/firestoreFunc";
+import {
+  addCart,
+  addFavProduct,
+  isFavProductLearn,
+  removeFavProduct,
+} from "../../database/firestoreFunc";
 import { ERROR } from "../../constants/types";
 import { toastNotify } from "../toastify/toastNotify";
 import { cartActions } from "../../redux/slices/cartSlice";
 import { fadeInRights } from "../../animations/variants";
 import Button from "../UI/Button";
 
-
-
 const DetailContent = ({ content }) => {
   const [isFavProduct, setIsFavProduct] = useState(false);
   const [colorOpt, setColorOpt] = useState(content.colorOptions[0]);
   const [isAddedCart, setIsAddedCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const { isLoggedIn, user } = useSelector((state) => state.authSlice);
+  const { isLoggedIn } = useSelector((state) => state.authSlice);
   const { cart } = useSelector((state) => state.cartSlice);
   const dispatch = useDispatch();
 
@@ -29,13 +32,11 @@ const DetailContent = ({ content }) => {
   }, [content, cart]);
   useEffect(() => {
     //! Ürün favori ürün ise ilgili state i güncelle
-    if (user?.uid) {
-      const isFavProductLearnHandle = async () => {
-        const isFavProductInfo =await isFavProductLearn(content?.id,user?.uid)
-        setIsFavProduct(isFavProductInfo)
-      };
-      isFavProductLearnHandle();
-    }
+    const isFavProductLearnHandle = async () => {
+      const isFavProductInfo = await isFavProductLearn(content?.id);
+      setIsFavProduct(isFavProductInfo);
+    };
+    isFavProductLearnHandle();
   }, []);
   //! Detay sayfası sepete ürün ekleme fonksiyonu
   const detailPageHandleAddCart = async () => {
@@ -44,7 +45,7 @@ const DetailContent = ({ content }) => {
       return;
     }
 
-    await addCart(content, user.uid, quantity);
+    await addCart(content, quantity);
     dispatch(cartActions.addCart({ product: content, quantity }));
   };
   //! Detay sayfası favori ürün olayları fonksiyonu
@@ -59,10 +60,10 @@ const DetailContent = ({ content }) => {
     //! Tıklandığında eğer ürün favori ürün ise
     //! kaldırır eğer değilse favori ürünlere ekler
     if (isFavProduct) {
-      await removeFavProduct(content.id, user.uid);
+      await removeFavProduct(content.id);
       setIsFavProduct(false);
     } else {
-      await addFavProduct(content, user.uid);
+      await addFavProduct(content);
       setIsFavProduct(true);
     }
   };

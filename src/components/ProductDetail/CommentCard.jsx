@@ -9,7 +9,7 @@ const CommentCard = ({ item }) => {
   return (
     <div className="flex gap-4">
       <img
-        className="size-16 object-contain   rounded-full"
+        className="size-16 rounded-full"
         src={item.imgSrc}
         alt={item.name}
       />

@@ -11,7 +11,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { db } from "../firebase/config";
+import { auth, db } from "../firebase/config";
 import { toastNotify } from "../components/toastify/toastNotify";
 import { v7 as uuidv7 } from "uuid";
 import { ERROR, SUCCESS } from "../constants/types";
@@ -29,14 +29,10 @@ export const addComment = async (comment, documentID) => {
 };
 
 //! Ürün Miktar artırma
-export const increaseQuantity = async (
-  product,
-  documentID,
-  setDoQuantityOperations
-) => {
+export const increaseQuantity = async (product, setDoQuantityOperations) => {
   try {
     setDoQuantityOperations(false);
-    await updateDoc(doc(db, "users", documentID), {
+    await updateDoc(doc(db, "users", auth.currentUser.uid), {
       [`cart.${product.id}`]: { ...product, quantity: product.quantity + 1 },
     });
   } catch (error) {
@@ -46,14 +42,10 @@ export const increaseQuantity = async (
   }
 };
 //! Ürün miktar azaltma
-export const decreaseQuantity = async (
-  product,
-  documentID,
-  setDoQuantityOperations
-) => {
+export const decreaseQuantity = async (product, setDoQuantityOperations) => {
   try {
     setDoQuantityOperations(false);
-    await updateDoc(doc(db, "users", documentID), {
+    await updateDoc(doc(db, "users", auth.currentUser.uid), {
       [`cart.${product.id}`]: { ...product, quantity: product.quantity - 1 },
     });
   } catch (error) {
@@ -64,9 +56,9 @@ export const decreaseQuantity = async (
 };
 
 //! Ürün sepete ekleme
-export const addCart = async (product, documentID, quantity) => {
+export const addCart = async (product, quantity) => {
   try {
-    await updateDoc(doc(db, "users", documentID), {
+    await updateDoc(doc(db, "users", auth.currentUser.uid), {
       [`cart.${product.id}`]: {
         quantity: quantity || 1,
         colorChoose: product.colorOptions[0],
@@ -80,9 +72,9 @@ export const addCart = async (product, documentID, quantity) => {
 };
 
 //! Sepet temizleme
-export const clearCart = async (documentID) => {
+export const clearCart = async () => {
   try {
-    await updateDoc(doc(db, "users", documentID), {
+    await updateDoc(doc(db, "users", auth.currentUser.uid), {
       cart: {},
     });
     toastNotify(SUCCESS, `Your cart has been cleared`);
@@ -91,17 +83,17 @@ export const clearCart = async (documentID) => {
   }
 };
 //! Sepetten ürün kaldırma
-export const removeCart = async (product, documentID) => {
+export const removeCart = async (product) => {
   try {
-    await updateDoc(doc(db, "users", documentID), {
+    await updateDoc(doc(db, "users", auth.currentUser.uid), {
       [`${"cart"}.${product.id}`]: deleteField(),
     });
   } catch (error) {
     toastNotify(ERROR, "Product could not be delete");
   }
 };
-export const isFavProductLearn = async (productID, uid) => {
-  const userDocRef = doc(db, "users", uid);
+export const isFavProductLearn = async (productID) => {
+  const userDocRef = doc(db, "users", auth.currentUser.uid);
   const userDoc = await getDoc(userDocRef);
   if (userDoc.exists()) {
     const data = userDoc.data();
@@ -110,9 +102,9 @@ export const isFavProductLearn = async (productID, uid) => {
   }
 };
 //! Favori ürün kaldırma
-export const removeFavProduct = async (productID, documentID) => {
+export const removeFavProduct = async (productID) => {
   try {
-    await updateDoc(doc(db, "users", documentID), {
+    await updateDoc(doc(db, "users", auth.currentUser.uid), {
       [`favouritesProducts.${productID}`]: deleteField(),
     });
     toastNotify(SUCCESS, "The product has been moved to favorites");
@@ -121,9 +113,9 @@ export const removeFavProduct = async (productID, documentID) => {
   }
 };
 //! Favori ürün ekleme
-export const addFavProduct = async (product, documentID) => {
+export const addFavProduct = async (product) => {
   try {
-    await updateDoc(doc(db, "users", documentID), {
+    await updateDoc(doc(db, "users", auth.currentUser.uid), {
       [`favouritesProducts.${product.id}`]: product,
     });
     toastNotify(SUCCESS, "The product has been added to favorites");
