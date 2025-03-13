@@ -22,6 +22,7 @@ import {
   isFavProductLearn,
   removeFavProduct,
 } from "../../../database/firestoreFunc";
+import { favProductsApi } from "../../../redux/api/favProductApi";
 
 const ProductCards = ({ type, product }) => {
   const [isAddedCart, setIsAddedCart] = useState(false);
@@ -71,6 +72,8 @@ const ProductCards = ({ type, product }) => {
       await addFavProduct(product);
       setIsFavProduct(true);
     }
+
+    dispatch(favProductsApi.util.invalidateTags(["Fav_Products"]));
   };
 
   switch (type) {

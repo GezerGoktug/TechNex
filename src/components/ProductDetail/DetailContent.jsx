@@ -15,6 +15,7 @@ import { toastNotify } from "../toastify/toastNotify";
 import { cartActions } from "../../redux/slices/cartSlice";
 import { fadeInRights } from "../../animations/variants";
 import Button from "../UI/Button";
+import { favProductsApi } from "../../redux/api/favProductApi";
 
 const DetailContent = ({ content }) => {
   const [isFavProduct, setIsFavProduct] = useState(false);
@@ -66,6 +67,7 @@ const DetailContent = ({ content }) => {
       await addFavProduct(content);
       setIsFavProduct(true);
     }
+    dispatch(favProductsApi.util.invalidateTags(["Fav_Products"]));
   };
   return (
     <motion.div

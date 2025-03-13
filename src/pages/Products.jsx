@@ -1,22 +1,20 @@
 import Button from "../components/UI/Button";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MdFilterList } from "react-icons/md";
 import ProductSlider from "../components/Products/ProductSlider";
 import Filter from "../components/Products/Filter";
 import FiltreTags from "../components/Products/FiltreTags";
 import ProductsSection from "../components/Products/ProductsSection";
 import Categories from "../components/Products/Categories";
-import Pagination from "../components/UI/Pagination";
 import { motion } from "framer-motion";
 import { fadeInLeft } from "../animations/variants";
 import { filtreActions } from "../redux/slices/filtreSlice";
 import { useDispatch } from "react-redux";
 import { modalActions } from "../redux/slices/modalSlice";
 import Modal from "../components/UI/Modal";
-
+import Pagination from "../components/Products/Pagination";
 
 const Products = () => {
-  const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
   useEffect(() => {
     //! Sayfaya ilk girildiğinde filtre koşullarını sıfırla
@@ -26,7 +24,7 @@ const Products = () => {
     <>
       {/* FILTER MODAL (For mobile) START  */}
       <Modal>
-        <Filter currentPage={currentPage} />
+        <Filter />
       </Modal>
       {/* FILTER MODAL  STOP */}
       <div className="my-36 custom-container">
@@ -44,7 +42,7 @@ const Products = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="hidden md:block col-span-5 lg:col-span-1 h-max bg-slate-200 shadow-lg rounded-ss-3xl rounded-ee-3xl p-4 "
           >
-            <Filter currentPage={currentPage} />
+            <Filter />
           </motion.div>
           <Button
             onClick={() => dispatch(modalActions.openModal())}
@@ -56,11 +54,7 @@ const Products = () => {
           <div className=" col-span-12 md:col-span-7 lg:col-span-2">
             <FiltreTags />
             <ProductsSection />
-            <Pagination
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              totalPages={20}
-            />
+            <Pagination totalPages={20} />
           </div>
         </div>
       </div>

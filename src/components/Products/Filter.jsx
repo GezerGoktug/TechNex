@@ -10,9 +10,9 @@ import { productsActions } from "../../redux/slices/productsSlice";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
 
-const Filter = ({ currentPage }) => {
+const Filter = () => {
   const dispatch = useDispatch();
-  const { filtreTags } = useSelector((state) => state.filtreSlice);
+  const { filtreTags,currentPage } = useSelector((state) => state.filtreSlice);
   const { isOpen } = useSelector((state) => state.modalSlice);
   const [pageSize, setPageSize] = useState(16);
   const [lastVisible, setLastVisible] = useState(null);

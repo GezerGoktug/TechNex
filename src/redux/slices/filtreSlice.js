@@ -8,6 +8,7 @@ const initialState = {
     filteredCategories: [],
     filteredYears: [],
   },
+  currentPage: 1,
 };
 
 export const filtreSlice = createSlice({
@@ -22,6 +23,15 @@ export const filtreSlice = createSlice({
     },
     resetFiltreTags(state) {
       state.filtreTags = initialState.filtreTags;
+    },
+    nextPage(state) {
+      state.currentPage++;
+    },
+    prevPage(state) {
+      state.currentPage--;
+    },
+    setPage(state, action) {
+      state.currentPage = action.payload;
     },
   },
 });

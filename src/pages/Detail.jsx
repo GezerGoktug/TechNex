@@ -10,15 +10,17 @@ import Reviews from "../components/ProductDetail/Reviews";
 import Features from "../components/ProductDetail/Features";
 import { useState } from "react";
 import Skeletons from "../components/UI/Skeletons";
-import useReviews from "../hooks/useReviews";
+
+import CreateReview from "../components/ProductDetail/CreateReview";
+import { useGetProductDetailQuery } from "../redux/api/productDetailApi";
 
 const Detail = () => {
   const { productID } = useParams();
-  const {loading,product} = useReviews(productID)
+  const { data: product, isLoading } = useGetProductDetailQuery(productID);
   const [sectionChange, setSectionChange] = useState(true);
   return (
     <div className="custom-container  my-32 ">
-      {loading ? (
+      {isLoading ? (
         <Skeletons />
       ) : (
         <>
@@ -26,15 +28,14 @@ const Detail = () => {
             className="my-4 [&_svg]:!text-slate-400  "
             aria-label="Default breadcrumb example"
           >
-            <Breadcrumb.Item className="cursor-pointer [&_a]:hover:!text-slate-900" icon={HiHome}>
-           <Link to="../">
-              Home
-           </Link>
+            <Breadcrumb.Item
+              className="cursor-pointer [&_a]:hover:!text-slate-900"
+              icon={HiHome}
+            >
+              <Link to="../">Home</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item className="cursor-pointer [&_a]:hover:!text-slate-900">
-            <Link to="../products">
-            Products
-            </Link>
+              <Link to="../products">Products</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>{product?.title}</Breadcrumb.Item>
           </Breadcrumb>
@@ -73,7 +74,10 @@ const Detail = () => {
               (sectionChange ? (
                 <Features features={product?.features} />
               ) : (
-                <Reviews ID={productID} comments={product?.comments} />
+                <>
+                  <CreateReview id={productID} />
+                  <Reviews comments={product?.comments} />
+                </>
               ))}
           </section>
         </>

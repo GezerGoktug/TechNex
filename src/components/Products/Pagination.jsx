@@ -1,8 +1,13 @@
+import { useDispatch, useSelector } from "react-redux";
+import { filtreActions } from "../../redux/slices/filtreSlice";
 import { useState } from "react";
-import Button from "./Button";
+import Button from "../UI/Button";
 
-const Pagination = ({ totalPages, currentPage, setCurrentPage }) => {
+
+const Pagination = ({ totalPages }) => {
   const [pageArray, setPageArray] = useState([1, 2, 3, 4, 5]);
+  const dispatch = useDispatch();
+  const { currentPage } = useSelector((state) => state.filtreSlice);
 
   const handleNextPage = () => {
     if (
@@ -10,8 +15,7 @@ const Pagination = ({ totalPages, currentPage, setCurrentPage }) => {
       !(currentPage + 3 > totalPages)
     )
       setPageArray((prevState) => prevState.map((item) => item + 1));
-    if (!(currentPage + 1 > totalPages))
-      setCurrentPage((prevState) => prevState + 1);
+    if (!(currentPage + 1 > totalPages)) dispatch(filtreActions.nextPage());
   };
   const handleClickPage = (index) => {
     if (index === Math.max(...pageArray) && !(index === totalPages)) {
@@ -33,12 +37,12 @@ const Pagination = ({ totalPages, currentPage, setCurrentPage }) => {
     )
       setPageArray((prevState) => prevState.map((item) => item - 1));
 
-    setCurrentPage(index);
+    dispatch(filtreActions.setPage(index));
   };
   const handlePrevPage = () => {
     if (currentPage - 3 < Math.min(...pageArray) && !(currentPage - 4 < 0))
       setPageArray((prevState) => prevState.map((item) => item - 1));
-    if (!(currentPage - 1 === 0)) setCurrentPage((prevState) => prevState - 1);
+    if (!(currentPage - 1 === 0)) dispatch(filtreActions.prevPage());
   };
 
   return (
