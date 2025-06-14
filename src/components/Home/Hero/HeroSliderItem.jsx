@@ -2,6 +2,7 @@ import { fadeInUp } from "../../../animations/variants";
 
 import { motion } from "framer-motion";
 import Button from "../../UI/Button";
+import { memo } from "react";
 
 const HeroSliderItem = ({ item, i }) => {
   return (
@@ -35,4 +36,6 @@ const HeroSliderItem = ({ item, i }) => {
   );
 };
 
-export default HeroSliderItem;
+const memoizedComp = memo(HeroSliderItem);
+
+export default memoizedComp;

@@ -2,6 +2,7 @@ import {
   collection,
   deleteField,
   doc,
+  endBefore,
   getDoc,
   getDocs,
   limit,
@@ -128,8 +129,8 @@ export const addFavProduct = async (product) => {
 export const handleFiltre = async (
   filtreTags,
   currentPage,
-  lastVisible,
-  setLastVisible,
+  referenceDocId,
+  direction,
   pageSize
 ) => {
   const {
@@ -140,17 +141,8 @@ export const handleFiltre = async (
     searchTerm,
   } = filtreTags;
   const collect = collection(db, "products");
-  let q = query(collect, orderBy("title"), limit(pageSize));
 
-  //! Sayfalama: Sonraki sayfalar için sorguyu son görünür belgeden(üründen) başlatacak şekilde ayarla
-  if (currentPage > 1) {
-    q = query(
-      collect,
-      orderBy("title"),
-      startAfter(lastVisible),
-      limit(pageSize)
-    );
-  }
+  let q = query(collect);
 
   //! Minimum fiyat filtresini uygula eğer belirtilmişse
   if (minPrice > 0) q = query(q, where("price", ">=", minPrice));
@@ -167,22 +159,44 @@ export const handleFiltre = async (
   if (filteredYears.length > 0)
     q = query(q, where("year", "in", filteredYears));
 
+  const productsCount = (await getDocs(q)).size;
+
+
+  const referenceDoc = referenceDocId
+    ? await getDoc(doc(db, "products", referenceDocId))
+    : null;
+
+  //! Sayfalama: Sonraki sayfalar için sorguyu son görünür belgeden(üründen) başlatacak şekilde ayarla
+  if (currentPage > 1) {
+    if (direction === "next") {
+      q = query(q, orderBy("title"), startAfter(referenceDoc), limit(pageSize));
+    } else {
+      q = query(q, orderBy("title"), endBefore(referenceDoc), limit(pageSize));
+    }
+  } else {
+    q = query(q, orderBy("title"), limit(pageSize));
+  }
+
   const querySnapshot = await getDocs(q);
+
   //! Sorgu sonuçlarını ürün nesnelerinin bir dizisine dönüştür
   const products = querySnapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));
+
   //! Arama terimine göre ürünleri filtrele
   const updatedProducts = products.filter((product) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  let lastProductId,
+    firstProductId = null;
+
   //! Sayfalama için son görünür belgeyi(ürünü) güncelle, eğer sonuçlar varsa
   if (updatedProducts.length !== 0) {
-    const docSnap = await getDoc(
-      doc(db, "products", updatedProducts[updatedProducts.length - 1].id)
-    );
-    setLastVisible(docSnap);
+    lastProductId = querySnapshot.docs.at(-1).id;
+    firstProductId = querySnapshot.docs.at(0).id;
   }
   //! Ürünlerdeki zaman keylerindeki timestamp türündeki değerleri düzenleme
   updatedProducts.forEach((product) => {
@@ -191,5 +205,10 @@ export const handleFiltre = async (
     });
   });
 
-  return updatedProducts;
+  return {
+    products: updatedProducts,
+    totalPage: Math.ceil(productsCount / pageSize),
+    lastProductId,
+    firstProductId,
+  };
 };

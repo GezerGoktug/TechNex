@@ -2,65 +2,14 @@ import { FaSearch, FaSpinner } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { handleFiltre } from "../../database/firestoreFunc";
 import { filtreActions } from "../../redux/slices/filtreSlice";
 import { modalActions } from "../../redux/slices/modalSlice";
-import { productsActions } from "../../redux/slices/productsSlice";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
 
 const Filter = () => {
   const dispatch = useDispatch();
-  const { filtreTags,currentPage } = useSelector((state) => state.filtreSlice);
   const { isOpen } = useSelector((state) => state.modalSlice);
-  const [pageSize, setPageSize] = useState(16);
-  const [lastVisible, setLastVisible] = useState(null);
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      if (width >= 1280) setPageSize(16);
-      else if (width >= 930) setPageSize(12);
-      else if (width >= 768) setPageSize(8);
-      else if (width >= 640) setPageSize(15);
-      else setPageSize(16);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const filterOptionsHandleChange = (field, arr, option) => {
-    const optionsArray = arr;
-
-    const newFiltreOptions = optionsArray.includes(option)
-      ? optionsArray.filter((item) => item !== option)
-      : [...optionsArray, option];
-    setFieldValue(field, newFiltreOptions);
-  };
-
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        dispatch(productsActions.loading());
-        const products = await handleFiltre(
-          filtreTags,
-          currentPage,
-          lastVisible,
-          setLastVisible,
-          pageSize
-        );
-        dispatch(productsActions.setProducts(products));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getProducts();
-  }, [filtreTags, currentPage, pageSize]);
 
   const onSubmit = async (values) => {
     dispatch(filtreActions.updateFiltreTags(values));
@@ -71,7 +20,6 @@ const Filter = () => {
     isSubmitting,
     handleReset,
     setValues,
-    setFieldValue,
     handleChange,
     handleSubmit,
     values,
@@ -148,13 +96,8 @@ const Filter = () => {
               <input
                 value={brand}
                 checked={values.filteredBrands.includes(brand)}
-                onChange={() =>
-                  filterOptionsHandleChange(
-                    "filteredBrands",
-                    values.filteredBrands,
-                    brand
-                  )
-                }
+                onChange={handleChange}
+                name="filteredBrands"
                 type="checkbox"
                 className="scale-125"
               />
@@ -177,13 +120,8 @@ const Filter = () => {
               <input
                 value={category}
                 checked={values.filteredCategories.includes(category)}
-                onChange={() =>
-                  filterOptionsHandleChange(
-                    "filteredCategories",
-                    values.filteredCategories,
-                    category
-                  )
-                }
+                onChange={handleChange}
+                name="filteredCategories"
                 type="checkbox"
                 className="scale-125"
               />
@@ -211,13 +149,8 @@ const Filter = () => {
               <input
                 value={year}
                 checked={values.filteredYears.includes(year)}
-                onChange={() =>
-                  filterOptionsHandleChange(
-                    "filteredYears",
-                    values.filteredYears,
-                    year
-                  )
-                }
+                onChange={handleChange}
+                name="filteredYears"
                 type="checkbox"
                 className="scale-125"
               />

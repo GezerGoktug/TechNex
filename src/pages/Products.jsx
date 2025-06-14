@@ -54,7 +54,7 @@ const Products = () => {
           <div className=" col-span-12 md:col-span-7 lg:col-span-2">
             <FiltreTags />
             <ProductsSection />
-            <Pagination totalPages={20} />
+            <Pagination />
           </div>
         </div>
       </div>

@@ -9,6 +9,8 @@ const initialState = {
     filteredYears: [],
   },
   currentPage: 1,
+  totalPage: 1,
+  direction: "next",
 };
 
 export const filtreSlice = createSlice({
@@ -26,12 +28,19 @@ export const filtreSlice = createSlice({
     },
     nextPage(state) {
       state.currentPage++;
+      state.direction = "next";
     },
     prevPage(state) {
       state.currentPage--;
+      state.direction = "prev";
     },
     setPage(state, action) {
       state.currentPage = action.payload;
+      if (state.currentPage > action.payload) state.direction = "prev";
+      else if (state.currentPage < action.payload) state.direction = "next";
+    },
+    setPageCount(state, action) {
+      state.totalPage = action.payload;
     },
   },
 });
